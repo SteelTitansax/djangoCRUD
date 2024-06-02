@@ -1,7 +1,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Tasks</h1>
-<p>lorem ipsum </p>
+<h1>Tasks Pending   </h1>
+<ul>
+    {% for task in tasks %}
+        {% if task.important %}
+        <strong><a href="{% url 'task_detail' task.id %}">{{task.title}}</a></strong>
+        {% else %}
+        <a href="{% url 'task_detail' task.id %}">{{task.title}}</a>
+
+        {% endif %}
+        <p>{{task.description}}</p>
+        <p>{{task.user.username}}</p>
+
+ 
+    {% endfor %}
+</ul>
+
 {% endblock %}
 
