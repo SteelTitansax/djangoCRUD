@@ -54,6 +54,8 @@ def create_task(request):
 
     else:
         try:
+            print(request.POST)
+
             form = TaskForm(request.POST)
             new_task = form.save(commit=False)
             new_task.user = request.user

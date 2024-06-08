@@ -2,40 +2,65 @@
 
 {% block content %}
     <h1> Task Detail</h1>
-    {% if task.important %}
-    <strong><h1>{{task.title}}</h1></strong>
-    {% else %}
-    <h2>{{task.title}}</h2>
+
 
     {{error}}
+    <br/><br/><br/><br/><br/><br/>
 
-    {% endif %}
-    <p>{{task.description}}</p>
-    <p>{{task.user.username}}</p>
+    
+    <div class="container">
+        <div class="row">
+        
+        <div class="col-2"></div>
+        
+        <div class="col-8">
+     
+            <form method = "post">
+            {% csrf_token %}
 
-    <form method = "post">
-     {% csrf_token %}
-     {{form.as_p}}
+                    <div class="card">
+                        <div class="form-group">
+                            <label for="Title">Title</label>
+                            <input type="text" class="form-control" id="title" placeholder={{task.title}} name="title">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="Description">Description</label>
+                            <input type="text" class="form-control" id="description" placeholder={{task.description}} name="dºescription">
+                        </div>
+                        
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="important" name="important">
+                            <label class="form-check-label" for="important">Important</label>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-success">Update</button>
+                    </div>
+            
+            </form>
 
-     <button>
-        Update
-     </button>
+                <form action="{% url 'complete_task' task.id %}" method="POST">
+                    {% csrf_token %}
+                    <div class="card">
+                        <button type="submit" class="btn btn-primary">Complete</button>
+                    </div>
+                </form>
+            
+                <form action="{% url 'delete_task' task.id %}" method="POST">
+                    {% csrf_token %}
+                    <div class="card">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </div>
+                </form>
+                    
+        </div>
+        
+    
+        <div class="col-2"></div>
+  
+    </div>
 
-    </form>
+</div>
 
-    <form action="{% url 'complete_task' task.id %}" method="POST">
-        {% csrf_token %}
-
-        <button>
-        Complete
-        </button>
-    </form>
-    <form action="{% url 'delete_task' task.id %}" method="POST">
-        {% csrf_token %}
-
-        <button>
-        Delete
-        </button>
-    </form>
 {% endblock %}
 
